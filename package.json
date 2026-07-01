@@ -1,0 +1,9 @@
+{
+  "name": "team-hub",
+  "version": "2.0.0",
+  "private": true,
+  "description": "서비스기획팀 허브 — 프롬프트 훈련 + 보안·IT 뉴스",
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
+}

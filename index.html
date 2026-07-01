@@ -3,39 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>프롬프트 도장 — 매일 프롬프트 훈련</title>
+  <title>서비스기획팀 허브</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/shared.css" />
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <div class="header-inner">
-        <div class="logo">
-          <span class="logo-icon">🥋</span>
+  <div class="hub">
+    <header class="hub-header">
+      <div class="hub-header-inner">
+        <div class="hub-brand">
+          <span class="hub-logo">🏠</span>
           <div>
-            <h1>프롬프트 도장</h1>
-            <p class="logo-sub">서비스기획팀 AI PM 훈련소</p>
+            <h1>서비스기획팀 허브</h1>
+            <p>팀원을 위한 AI · 보안 · IT 학습 공간</p>
           </div>
         </div>
-        <nav class="nav" id="mainNav">
-          <button class="nav-btn active" data-view="dashboard">대시보드</button>
-          <button class="nav-btn" data-view="training">오늘의 훈련</button>
-          <button class="nav-btn" data-view="guide">RCTO 가이드</button>
-          <button class="nav-btn" data-view="history">훈련 기록</button>
-        </nav>
       </div>
     </header>
 
-    <main class="main" id="mainContent"></main>
+    <main class="hub-main">
+      <section class="hub-hero">
+        <h2>안녕하세요, 팀원 여러분 👋</h2>
+        <p>매일 성장하는 서비스기획팀을 위한 도구 모음입니다.<br />원하는 서비스를 선택해 시작하세요.</p>
+      </section>
 
-    <footer class="footer">
-      <p>프롬프트 도장 v1.0 — 서비스기획팀을 위한 매일 프롬프트 훈련</p>
+      <section class="service-grid">
+        <a href="/prompt/" class="service-card service-prompt">
+          <div class="service-icon">🥋</div>
+          <h3>프롬프트 훈련하기</h3>
+          <p>매일 10분, RCTO 프레임워크로 AI PM 프롬프트 실력을 키워보세요.</p>
+          <ul class="service-tags">
+            <li>일일 미션</li>
+            <li>자동 분석</li>
+            <li>훈련 기록</li>
+          </ul>
+          <span class="service-cta">훈련 시작 →</span>
+        </a>
+
+        <a href="/news/" class="service-card service-news">
+          <div class="service-icon">📰</div>
+          <h3>매일 뉴스 보기</h3>
+          <p>보안·IT 관련 최신 기사를 카테고리별로 모아 요약해서 확인하세요.</p>
+          <ul class="service-tags">
+            <li>매일 업데이트</li>
+            <li>카테고리 분류</li>
+            <li>원문 링크</li>
+          </ul>
+          <span class="service-cta">뉴스 보기 →</span>
+        </a>
+      </section>
+
+      <section class="hub-info card">
+        <h3>📌 팀원 안내</h3>
+        <div class="member-chips">
+          <span class="chip">성욱</span>
+          <span class="chip">병조</span>
+          <span class="chip">경하</span>
+          <span class="chip">유리</span>
+          <span class="chip">다해</span>
+        </div>
+        <p class="hub-info-text">프롬프트 훈련 시 본인 이름을 선택해 기록을 남겨주세요. 뉴스는 매일 자동으로 최신 기사가 업데이트됩니다.</p>
+      </section>
+    </main>
+
+    <footer class="hub-footer">
+      <p>서비스기획팀 허브 v2.0</p>
     </footer>
   </div>
-
-  <script type="module" src="js/app.js"></script>
 </body>
 </html>
