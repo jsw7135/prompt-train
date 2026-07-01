@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프롬프트 도장 — 매일 프롬프트 훈련</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">🥋</span>
+          <div>
+            <h1>프롬프트 도장</h1>
+            <p class="logo-sub">서비스기획팀 AI PM 훈련소</p>
+          </div>
+        </div>
+        <nav class="nav" id="mainNav">
+          <button class="nav-btn active" data-view="dashboard">대시보드</button>
+          <button class="nav-btn" data-view="training">오늘의 훈련</button>
+          <button class="nav-btn" data-view="guide">RCTO 가이드</button>
+          <button class="nav-btn" data-view="history">훈련 기록</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main" id="mainContent"></main>
+
+    <footer class="footer">
+      <p>프롬프트 도장 v1.0 — 서비스기획팀을 위한 매일 프롬프트 훈련</p>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
