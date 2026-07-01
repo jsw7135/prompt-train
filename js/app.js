@@ -1,4 +1,4 @@
-import { MISSIONS, getTodayMission, RCTO_GUIDE } from "./data.js";
+import { MISSIONS, getTodayMission, RCTO_GUIDE, TEAM_MEMBERS } from "./data.js";
 import { analyzePrompt } from "./analyzer.js";
 import {
   loadData,
@@ -60,14 +60,24 @@ function renderDashboard() {
     ${!data.userName ? `
     <div class="card" style="margin-bottom:1.5rem">
       <div class="form-group" style="margin-bottom:0">
-        <label class="form-label">이름을 입력해 주세요</label>
-        <div style="display:flex;gap:0.75rem">
-          <input type="text" id="userNameInput" placeholder="홍길동" style="flex:1" />
+        <label class="form-label">팀원을 선택해 주세요</label>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+          <select id="userNameSelect" class="form-select" style="flex:1;min-width:140px">
+            <option value="" disabled selected>이름 선택</option>
+            ${TEAM_MEMBERS.map((name) => `<option value="${name}">${name}</option>`).join("")}
+          </select>
           <button class="btn btn-primary" id="saveNameBtn">시작하기</button>
         </div>
       </div>
     </div>
-    ` : ""}
+    ` : `
+    <div class="card" style="margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <span style="font-size:0.9rem;color:var(--text-muted)">훈련 중인 팀원: <strong style="color:var(--accent)">${data.userName}</strong></span>
+        <button class="btn btn-secondary" id="changeNameBtn" style="padding:0.5rem 1rem;font-size:0.8rem">팀원 변경</button>
+      </div>
+    </div>
+    `}
 
     <div class="stats-grid">
       <div class="stat-card">
@@ -137,11 +147,16 @@ function renderDashboard() {
   `;
 
   document.getElementById("saveNameBtn")?.addEventListener("click", () => {
-    const name = document.getElementById("userNameInput").value.trim();
+    const name = document.getElementById("userNameSelect")?.value;
     if (name) {
       setUserName(name);
       render();
     }
+  });
+
+  document.getElementById("changeNameBtn")?.addEventListener("click", () => {
+    setUserName("");
+    render();
   });
 
   document.getElementById("goTrainingBtn")?.addEventListener("click", () => {

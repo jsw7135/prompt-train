@@ -1,3 +1,5 @@
+export const TEAM_MEMBERS = ["성욱", "병조", "경하", "유리", "다해"];
+
 export const MISSIONS = [
   {
     id: 1,

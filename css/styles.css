@@ -263,22 +263,42 @@ body {
 }
 
 textarea,
-input[type="text"] {
+input[type="text"],
+select.form-select {
   width: 100%;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.875rem 1rem;
   color: var(--text);
-  font-family: "JetBrains Mono", "Noto Sans KR", monospace;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 0.875rem;
   line-height: 1.6;
   resize: vertical;
   transition: border-color 0.2s;
 }
 
+textarea {
+  font-family: "JetBrains Mono", "Noto Sans KR", monospace;
+}
+
+select.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b9cb3' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+select.form-select option {
+  background: var(--bg-card);
+  color: var(--text);
+}
+
 textarea:focus,
-input[type="text"]:focus {
+input[type="text"]:focus,
+select.form-select:focus {
   outline: none;
   border-color: var(--accent);
 }
