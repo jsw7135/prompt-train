@@ -1,4 +1,5 @@
 const Parser = require("rss-parser");
+const iconv = require("iconv-lite");
 
 const parser = new Parser({
   timeout: 12000,
@@ -6,7 +7,7 @@ const parser = new Parser({
 });
 
 const FEEDS = [
-  { url: "https://www.boannews.com/media/news_rss.xml", source: "보안뉴스", lang: "ko", maxItems: 20, weight: 3 },
+  { url: "https://www.boannews.com/media/news_rss.xml", source: "보안뉴스", lang: "ko", encoding: "euc-kr", maxItems: 20, weight: 3 },
   { url: "https://www.etnews.com/rss/Section901.xml", source: "전자신문", lang: "ko", maxItems: 15, weight: 3 },
   { url: "https://www.etnews.com/rss/Section902.xml", source: "전자신문 속보", lang: "ko", maxItems: 15, weight: 3 },
   { url: "https://www.etnews.com/rss/Section903.xml", source: "전자신문 인기", lang: "ko", maxItems: 10, weight: 2 },
@@ -41,6 +42,50 @@ function getKSTDateKey() {
     month: "2-digit",
     day: "2-digit",
   }).format(new Date());
+}
+
+function detectXmlEncoding(buffer) {
+  const header = buffer.slice(0, 400).toString("ascii");
+  const match = header.match(/encoding=['"]([^'"]+)['"]/i);
+  if (!match) return null;
+  const enc = match[1].toLowerCase().replace(/_/g, "-");
+  if (enc === "euc-kr" || enc === "cp949" || enc === "ks-c-5601-1987") return "euc-kr";
+  if (enc === "utf-8") return "utf-8";
+  return enc;
+}
+
+function decodeFeedXml(buffer, fallbackEncoding = "utf-8") {
+  const detected = detectXmlEncoding(buffer) || fallbackEncoding;
+  let xml;
+
+  if (detected === "utf-8") {
+    xml = buffer.toString("utf-8");
+  } else {
+    xml = iconv.decode(buffer, detected);
+  }
+
+  return xml.replace(/encoding=['"][^'"]+['"]/i, 'encoding="utf-8"');
+}
+
+async function fetchFeedXml(url, encoding) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "TeamHub-NewsBot/1.0" },
+      signal: controller.signal,
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    const buffer = Buffer.from(await res.arrayBuffer());
+    return decodeFeedXml(buffer, encoding || "utf-8");
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function stripHtml(html) {
@@ -189,7 +234,8 @@ function sortArticles(articles) {
 
 async function fetchFeed(feedConfig) {
   try {
-    const feed = await parser.parseURL(feedConfig.url);
+    const xml = await fetchFeedXml(feedConfig.url, feedConfig.encoding);
+    const feed = await parser.parseString(xml);
     const items = (feed.items || []).slice(0, feedConfig.maxItems || 10);
 
     return items.map((item) => {
@@ -218,6 +264,7 @@ async function fetchFeed(feedConfig) {
 
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate=86400");
 
   if (req.method === "OPTIONS") {
