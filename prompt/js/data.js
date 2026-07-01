@@ -1,4 +1,10 @@
-export const TEAM_MEMBERS = ["성욱", "병조", "경하", "유리", "다해"];
+export const TEAM_PARTS = [
+  { id: "planning", name: "서비스기획파트", members: ["경하", "병조", "유리", "다해"] },
+  { id: "dev", name: "개발파트", members: ["준영", "정부", "승욱", "예솔", "종식"] },
+  { id: "security", name: "정보보안파트", members: ["하영", "형진", "현"] },
+];
+
+export const TEAM_MEMBERS = TEAM_PARTS.flatMap((part) => part.members);
 
 export const MISSIONS = [
   {

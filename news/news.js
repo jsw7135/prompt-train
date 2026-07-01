@@ -1,16 +1,16 @@
-const CATEGORY_ORDER = ["all", "security", "policy", "ai-tech", "infra", "domestic"];
+const CATEGORY_ORDER = ["all", "domestic", "security", "policy", "ai-tech", "infra"];
 
 const CATEGORY_LABELS = {
   all: "전체",
+  domestic: "국내 이슈",
   security: "보안 사고·취약점",
   policy: "정책·규제",
   "ai-tech": "AI·기술 트렌드",
   infra: "클라우드·인프라",
-  domestic: "국내 이슈",
 };
 
 let newsData = null;
-let activeCategory = "all";
+let activeCategory = "domestic";
 
 const newsMeta = document.getElementById("newsMeta");
 const categoryTabs = document.getElementById("categoryTabs");
@@ -58,7 +58,7 @@ function showError(message) {
 function renderMeta() {
   newsMeta.innerHTML = `
     <span class="news-date-badge">📅 ${newsData.date}</span>
-    <span class="news-count">총 ${newsData.totalCount}건 · 매일 자동 업데이트</span>
+    <span class="news-count">총 ${newsData.totalCount}건 · 국내 ${newsData.domesticCount || 0}건 · 매일 자동 업데이트</span>
   `;
 }
 
@@ -116,6 +116,7 @@ function renderArticles() {
             <span class="news-time">${article.relativeTime}</span>
           </div>
           <h3>${escapeHtml(article.title)}</h3>
+          <p class="news-summary-label">📋 핵심 요약</p>
           <p class="news-summary">${escapeHtml(article.summary)}</p>
           <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="news-link">
             상세 기사 보기 →

@@ -1,4 +1,4 @@
-import { MISSIONS, getTodayMission, RCTO_GUIDE, TEAM_MEMBERS } from "./data.js";
+import { MISSIONS, getTodayMission, RCTO_GUIDE, TEAM_PARTS } from "./data.js";
 import { analyzePrompt } from "./analyzer.js";
 import {
   loadData,
@@ -64,7 +64,11 @@ function renderDashboard() {
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
           <select id="userNameSelect" class="form-select" style="flex:1;min-width:140px">
             <option value="" disabled selected>이름 선택</option>
-            ${TEAM_MEMBERS.map((name) => `<option value="${name}">${name}</option>`).join("")}
+            ${TEAM_PARTS.map((part) => `
+              <optgroup label="${part.name}">
+                ${part.members.map((name) => `<option value="${name}">${name}</option>`).join("")}
+              </optgroup>
+            `).join("")}
           </select>
           <button class="btn btn-primary" id="saveNameBtn">시작하기</button>
         </div>
